@@ -1,18 +1,30 @@
+#define DEBUG             1
+
+#define BUTTON_PIN        19
+#define LED_PIN           18
+#define DEBOUNCE_DELAY    100
+
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+uint32_t lastDebounceTime = 0;
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+
+void setup() {  
+  Serial.begin(9600);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(LED_PIN, OUTPUT);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  if (millis() - lastDebounceTime < DEBOUNCE_DELAY) {
+    return;
+  }
+  lastDebounceTime = millis();
+  if (digitalRead(BUTTON_PIN) == LOW) {
+    digitalWrite(LED_PIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_PIN, LOW);
+  } else {
+    digitalWrite(LED_PIN, LOW);
+  }
 }
