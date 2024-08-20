@@ -8,14 +8,7 @@
 
 uint32_t lastDebounceTime = 0;
 
-
-void setup() {  
-  Serial.begin(9600);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
-  pinMode(LED_PIN, OUTPUT);
-}
-
-void loop() {
+void buttonRead(){
   if (millis() - lastDebounceTime < DEBOUNCE_DELAY) {
     return;
   }
@@ -27,4 +20,14 @@ void loop() {
   } else {
     digitalWrite(LED_PIN, LOW);
   }
+}
+
+void setup() {  
+  Serial.begin(9600);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+  buttonRead();
 }
