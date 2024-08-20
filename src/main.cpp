@@ -14,9 +14,12 @@ void buttonRead(){
   }
   lastDebounceTime = millis();
   if (digitalRead(BUTTON_PIN) == LOW) {
+    if (DEBUG) Serial.println("Button pressed");
     digitalWrite(LED_PIN, HIGH);
+    if (DEBUG) Serial.println("LED on");
     delay(1000);
     digitalWrite(LED_PIN, LOW);
+    if (DEBUG) Serial.println("LED off");
   } else {
     digitalWrite(LED_PIN, LOW);
   }
