@@ -8,6 +8,22 @@
 
 uint32_t lastDebounceTime = 0;
 
+void buttonRead(){
+  if (millis() - lastDebounceTime < DEBOUNCE_DELAY) {
+    return;
+  }
+  lastDebounceTime = millis();
+  if (digitalRead(BUTTON_PIN) == LOW) {
+    if (DEBUG) Serial.println("Button pressed");
+    digitalWrite(LED_PIN, HIGH);
+    if (DEBUG) Serial.println("LED on");
+    delay(1000);
+    digitalWrite(LED_PIN, LOW);
+    if (DEBUG) Serial.println("LED off");
+  } else {
+    digitalWrite(LED_PIN, LOW);
+  }
+}
 
 void setup() {  
   Serial.begin(9600);
@@ -16,15 +32,5 @@ void setup() {
 }
 
 void loop() {
-  if (millis() - lastDebounceTime < DEBOUNCE_DELAY) {
-    return;
-  }
-  lastDebounceTime = millis();
-  if (digitalRead(BUTTON_PIN) == LOW) {
-    digitalWrite(LED_PIN, HIGH);
-    delay(1000);
-    digitalWrite(LED_PIN, LOW);
-  } else {
-    digitalWrite(LED_PIN, LOW);
-  }
+  buttonRead();
 }
